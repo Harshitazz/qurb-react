@@ -53,9 +53,12 @@ const CheckoutSummary: React.FC = () => {
       clearCart();
 
       
-    } catch (error: any) {
-      console.error("Checkout error:", error);
-      toast.error(error.message || "Failed to process checkout");
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            toast.error(error.message || "Failed to process checkout");
+          } else {
+            toast.error("Failed to process checkout");
+          }
     } finally {
       setIsProcessing(false);
     }
