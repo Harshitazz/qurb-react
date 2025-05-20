@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom"; // React Router instead of next/router
 import { calculateCartTotals } from "../lib/cartUtils";
 import { useCart } from "../providers/CartProvider";
 import { toast } from "react-toastify";
 
 
 const CheckoutSummary: React.FC = () => {
-  const navigate = useNavigate();
   const { cartItems, clearCart ,products,setProducts} = useCart();
   const [isProcessing, setIsProcessing] = useState(false);
 

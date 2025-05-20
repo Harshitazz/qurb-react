@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import { useCart } from '../providers/CartProvider';
 import CartItem from '../components/CartItem';
@@ -9,11 +7,11 @@ import type { CartItem as CartItemType } from '../types/index'; // adjust this i
 
 const Checkout: React.FC = () => {
   const navigate = useNavigate();
-  const { cartItems, loading, products } = useCart();
+  const { cartItems, products } = useCart();
 
  
 
-  if (cartItems.length === 0 && !loading) {
+  if (cartItems.length === 0 ) {
     return (
       <div className="text-center py-12 text-gray-700">
         <h1 className="text-2xl font-semibold mb-4">Your cart is empty</h1>
@@ -28,13 +26,7 @@ const Checkout: React.FC = () => {
     );
   }
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
-      </div>
-    );
-  }
+
 
   const groupedItems: CartItemType[] = [
     ...cartItems.filter((item) => !item.isOffer),
