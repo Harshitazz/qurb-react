@@ -40,6 +40,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [products, setProducts] = useState<Product[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [isHydrated, setIsHydrated] = useState(false);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -53,7 +54,30 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
         fetchProducts();
     }, []);
+    useEffect(() => {
+        try {
+            const savedWishlist = localStorage.getItem('CartItems');
+            if (savedWishlist) {
+                setCartItems(JSON.parse(savedWishlist));
+            }
+        } catch (error) {
+            console.error('Error loading cart:', error);
+        } finally {
+            setIsHydrated(true); // ← Ensure we only render after hydration
+        }
+    }, []);
+    useEffect(() => {
+        if (isHydrated) {
+            try {
+                localStorage.setItem('CartItems', JSON.stringify(cartItems));
+            } catch (error) {
+                console.error('Error saving cart:', error);
+            }
+        }
+    }, [cartItems, isHydrated]);
 
+    if (!isHydrated) return null;
+    
     const applyOffers = (items: CartItem[]) => {
         const offerItems = calculateOffers(items, products);
         return updateCartWithOffers(items, offerItems);

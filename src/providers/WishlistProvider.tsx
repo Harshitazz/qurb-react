@@ -23,6 +23,8 @@ interface WishlistProviderProps {
 export const WishlistProvider: React.FC<WishlistProviderProps> = ({ children }) => {
   const [wishlistItems, setWishlistItems] = useState<Product[]>([]);
 
+  const [isHydrated, setIsHydrated] = useState(false); 
+
   useEffect(() => {
     try {
       const savedWishlist = localStorage.getItem('wishlist');
@@ -30,17 +32,23 @@ export const WishlistProvider: React.FC<WishlistProviderProps> = ({ children }) 
         setWishlistItems(JSON.parse(savedWishlist));
       }
     } catch (error) {
-      console.error('Error loading wishlist from localStorage:', error);
+      console.error('Error loading wishlist:', error);
+    } finally {
+      setIsHydrated(true);
     }
   }, []);
 
   useEffect(() => {
-    try {
-      localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
-    } catch (error) {
-      console.error('Error saving wishlist to localStorage:', error);
+    if (isHydrated) {
+      try {
+        localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
+      } catch (error) {
+        console.error('Error saving wishlist:', error);
+      }
     }
-  }, [wishlistItems]);
+  }, [wishlistItems, isHydrated]);
+
+  if (!isHydrated) return null; 
 
   const addToWishlist = (product: Product): boolean => {
     const isInWishlist = wishlistItems.some(item => item.id === product.id);
