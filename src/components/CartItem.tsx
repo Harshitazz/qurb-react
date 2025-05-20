@@ -88,7 +88,7 @@ const remainingQty = (product?.available || 0) - totalQuantityInCart;
                 </div>
               )}
             </div>
-            {!isOfferItem && <div>{getAvailabilityBadge(remainingQty)}</div>}
+             <div>{getAvailabilityBadge(remainingQty)}</div>
           </div>
 
           <div className="bg-green-400 w-6 h-6 cursor-pointer rounded-md flex items-center justify-center mx-4">
