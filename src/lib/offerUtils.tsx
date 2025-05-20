@@ -49,7 +49,7 @@ export const calculateOffers = (
       freeItems.push({
         productId: cokeProduct.id,
         name: cokeProduct.name,
-        price: "£0",
+        price: cokeProduct.price,
         image: cokeProduct.img,
         quantity: freeCokeCount,
         isOffer: true,
@@ -78,7 +78,7 @@ export const calculateOffers = (
       freeItems.push({
         productId: coffeeProduct.id,
         name: coffeeProduct.name,
-        price: "£0",
+        price: coffeeProduct.price,
         image: coffeeProduct.img,
         quantity: freeCoffeeCount,
         isOffer: true,

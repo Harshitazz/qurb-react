@@ -21,7 +21,7 @@ const CheckoutSummary: React.FC = () => {
     try {
       // Create a shallow copy to avoid direct mutation (if using React state)
       const updatedProducts = [...products];
-        //db implementation
+        //should be db implementation
       cartItems.forEach((cartItem) => {
         const productIndex = updatedProducts.findIndex(
           (p) => p.id === cartItem.productId
