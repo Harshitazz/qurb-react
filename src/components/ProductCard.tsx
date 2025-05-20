@@ -9,17 +9,11 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-    const { addItem,cartItems} = useCart();
+    const { addItem} = useCart();
     const { toggleWishlist, isProductWishlisted } = useWishlist();
 
     const wishlisted = isProductWishlisted(product.id);
-    const totalQuantityInCart = cartItems
-    .filter((cartItem) => cartItem.productId === product.id)
-    .reduce((acc, curr) => acc + curr.quantity, 0);
-  
-  // Calculate remaining quantity considering all cart quantities (offers included)
-  const remainingQty = (product?.available || 0) - totalQuantityInCart;
-  
+ 
     const handleWishlistToggle = () => {
         toggleWishlist(product);
     };
